@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Simple Habits - Build Better Daily Routines{% endblock %}
+
+{% block content %}
+<!-- Main Hero Section -->
+<main class="main">
+    <div class="container">
+        <div class="hero">
+            <div class="hero-subtitle">Simple Habits</div>
+            <h1>Build Your Future<br>One Habit at a Time</h1>
+            <p>Every great story begins with small, consistent actions. Transform your daily routines into the foundation of your success.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-large">Start Your Journey</a>
+                <a href="{% url 'accounts:login' %}" class="btn btn-large">Sign In</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="features-header">
+            <h2>Why Choose Simple Habits?</h2>
+            <p>We've built a tool that helps you focus on what matters most - building better habits.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature">
+                <span class="feature-icon">✓</span>
+                <h3>Simple to Start</h3>
+                <p>Track your habits with a single click. No complex settings or distracting features to get in your way.</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📊</span>
+                <h3>See Your Progress</h3>
+                <p>Visual statistics show your achievements. Streaks, completion rates, and progress calendar keep you motivated.</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <h3>Focus on Goals</h3>
+                <p>Minimalist design removes distractions, leaving only what's truly important for your success.</p>
+            </div>
+		        <div class="feature">
+						    <span class="feature-icon">🌱</span>
+						    <h3>Build Healthy Routines</h3>
+						    <p>Strengthen positive habits day by day. The more you practice, the more natural and rewarding your routine becomes.</p>
+						</div>
+        </div>
+    </div>
+</section>
+{% endblock %}
