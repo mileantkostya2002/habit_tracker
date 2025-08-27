@@ -404,6 +404,10 @@ select {
     font-size: 15px;
     transition: all 0.2s ease;
     font-family: inherit;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 input:focus,
@@ -412,6 +416,36 @@ select:focus {
     outline: none;
     border-color: #1a1a1a;
     box-shadow: 0 0 0 3px rgba(26,26,26,0.1);
+    background-color: #ffffff;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Fix for webkit autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+}
+
+/* Form error styles */
+.form-errors {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-errors p {
+    margin: 0;
+    padding: 2px 0;
 }
 
 textarea {
@@ -678,13 +712,37 @@ textarea {
 
     .features-header {
         margin-bottom: 60px;
+        padding: 0 20px;
     }
 
     .features-header h2 {
         font-size: 28px;
     }
 
+    .features-header p {
+        font-size: 16px;
+    }
+
     .features-grid {
-        gap: 40px;
+        gap: 50px;
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+
+    .feature {
+        padding: 30px 20px;
+    }
+
+    .feature-icon {
+        font-size: 28px;
+        margin-bottom: 24px;
+    }
+
+    .feature h3 {
+        font-size: 22px;
+    }
+
+    .feature p {
+        font-size: 15px;
     }
 }

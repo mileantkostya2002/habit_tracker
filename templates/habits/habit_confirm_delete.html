@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Habit - Simple Habits{% endblock %}
+
+{% block content %}
+<div class="content-area">
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="form-container">
+                <div class="page-header">
+                    <h1>Delete Habit</h1>
+                    <p>This action cannot be undone</p>
+                </div>
+                
+                <div class="card" style="border-color: #dc3545; margin-bottom: 32px;">
+                    <h3>{{ object.name }}</h3>
+                    {% if object.description %}
+                        <p>{{ object.description }}</p>
+                    {% endif %}
+                    
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-number">{{ object.get_current_streak }}</span>
+                            <span class="stat-label">Current Streak</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">{{ object.get_total_completed_days }}</span>
+                            <span class="stat-label">Total Days</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">{{ object.get_completion_rate }}%</span>
+                            <span class="stat-label">30-Day Rate</span>
+                        </div>
+                    </div>
+
+                    <p><strong>Category:</strong> {{ object.category.name }}</p>
+                    <p><strong>Created:</strong> {{ object.created_at|date:"M d, Y" }}</p>
+                </div>
+
+                <p style="margin-bottom: 32px; text-align: center; color: #666666;">
+                    Are you sure you want to delete this habit? All progress data will be lost permanently.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="habit-actions" style="justify-content: center;">
+                        <button type="submit" class="btn btn-danger btn-large">Yes, Delete Habit</button>
+                        <a href="{% url 'habit:habit-list' %}" class="btn btn-large">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
