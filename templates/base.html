@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Simple Habits - Build Better Daily Routines{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="{% if user.is_authenticated %}{% url 'habit:habit-list' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="logo">Simple Habits</a>
+            <div class="header-buttons">
+                {% if user.is_authenticated %}
+                    <nav class="nav-links">
+                        <a href="{% url 'habit:habit-list' %}">My Habits</a>
+                        <a href="{% url 'habit:habit-create' %}">New Habit</a>
+                        <a href="{% url 'habit:category-create' %}">Categories</a>
+                    </nav>
+                     <form method="post" action="{% url 'accounts:logout' %}" style="display: inline;">
+								        {% csrf_token %}
+								        <button type="submit" class="btn">Sign Out</button>
+								    </form>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="btn">Sign In</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-primary">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Simple Habits. Built for those who strive for better.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from os import getenv
 from pathlib import Path
+
+from django.conf.global_settings import LOGOUT_REDIRECT_URL
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,15 +126,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/habits/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-SESSION_COOKIE_AGE = 66400 # 30 DAYS
-SESSION_SAVE_EVERY_REQUEST = True
+

@@ -18,17 +18,17 @@ class Category(models.Model):
 class Habit(models.Model):
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=255, blank=True, null=True)
-    category = models.ForeignKey(Category, related_name='category')
+    category = models.ForeignKey(Category, related_name='habits', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated')
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='habits')
 
     def __str__(self):
-        return f'{self.name} - {self.user.first_name}'
+        return f'{self.name} - {self.user.username}'
 
     def get_absolute_url(self):
-        return reverse('habit_detail', kwargs={'pk': self.pk})
+        return reverse('habit:habit-list')
 
     def get_current_streak(self):
         streak = 0
@@ -44,7 +44,7 @@ class Habit(models.Model):
                     break
             except HabitEntry.DoesNotExist:
                 break
-            return streak
+        return streak
 
     def get_total_completed_days(self):
         return self.entries.filter(completed=True).count()
@@ -73,7 +73,7 @@ class Habit(models.Model):
 
 
 class HabitEntry(models.Model):
-    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, verbose_name='habits', related_name='entries')
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name='entries')
     date = models.DateField(verbose_name='Date')
     notes = models.TextField(blank=True, verbose_name='Notes')
     completed = models.BooleanField(default=False)
@@ -87,4 +87,3 @@ class HabitEntry(models.Model):
     def __str__(self):
         status = "✅" if self.completed else "❌"
         return f"{self.habit.name} - {self.date} {status}"
-

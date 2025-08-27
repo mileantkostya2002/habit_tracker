@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}My Habits - Simple Habits{% endblock %}
+
+{% block content %}
+<div class="content-area">
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1>My Habits</h1>
+                <p>Build your future one habit at a time</p>
+            </div>
+
+            <div class="text-center mb-2">
+                <a href="{% url 'habit:habit-create' %}" class="btn btn-primary btn-large">Add New Habit</a>
+            </div>
+
+            {% if habit_list %}
+                <div class="grid">
+                    {% for habit in habit_list %}
+                        <div class="card">
+                            <h3>{{ habit.name }}</h3>
+                            {% if habit.description %}
+                                <p>{{ habit.description }}</p>
+                            {% endif %}
+
+                            <div class="stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">{{ habit.get_current_streak }}</span>
+                                    <span class="stat-label">Current Streak</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">{{ habit.get_total_completed_days }}</span>
+                                    <span class="stat-label">Total Days</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">{{ habit.get_completion_rate }}%</span>
+                                    <span class="stat-label">30-Day Rate</span>
+                                </div>
+                            </div>
+
+                            <p><strong>Category:</strong> {{ habit.category.name }}</p>
+                            <p><strong>Created:</strong> {{ habit.created_at|date:"M d, Y" }}</p>
+
+                            <form method="post" action="{% url 'habit:toggle-habit' habit.id %}" class="habit-toggle">
+                                {% csrf_token %}
+                                {% if habit.is_completed_today %}
+                                    <button type="submit" class="completed">✅ Completed Today</button>
+                                {% else %}
+                                    <button type="submit">⭕ Mark as Done</button>
+                                {% endif %}
+                            </form>
+
+                            <div class="habit-actions">
+                                <a href="{% url 'habit:habit-update' habit.pk %}" class="btn">Edit Habit</a>
+                                <a href="{% url 'habit:habit-delete' habit.pk %}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if is_paginated %}
+                    <div class="pagination">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">« First</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">‹ Previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">Next ›</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">Last »</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="empty-state">
+                    <h2>No habits yet</h2>
+                    <p>Start building better daily routines by creating your first habit.</p>
+                    <a href="{% url 'habit:habit-create' %}" class="btn btn-primary btn-large">Create Your First Habit</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
