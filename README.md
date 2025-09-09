@@ -4,6 +4,7 @@
 
 A minimalist, modern web application for tracking daily habits and building better routines. Built with Django and designed with simplicity and user experience in mind.
 
+[Visit my website](https://habit-tracker-m3j0.onrender.com/habits/)
 
 ---
 
