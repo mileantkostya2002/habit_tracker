@@ -9,8 +9,11 @@ A minimalist, modern web application for tracking daily habits and building bett
 ---
 
 **You can test my website:**
-- **Username**: test_user
-- **Password**: user1234
+
+**Username**: test_user  
+**Password**: user1234  
+
+**Or you can register a new account**
 
 ## ✨ Features
 
