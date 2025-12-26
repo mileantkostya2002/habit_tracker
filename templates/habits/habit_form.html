@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Habit{% else %}Create New Habit{% endif %} - Simple Habits
+{% endblock %}
+
+{% block content %}
+<div class="content-area">
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="form-container">
+                <div class="page-header">
+                    <h1>{% if form.instance.pk %}Edit Habit{% else %}Create New Habit{% endif %}</h1>
+                    <p>{% if form.instance.pk %}Update your habit details{% else %}Start building a better version of yourself{% endif %}</p>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">Habit Name</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="form-errors">
+                                {% for error in form.name.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}">Description (Optional)</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="form-errors">
+                                {% for error in form.description.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}">Category</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                            <div class="form-errors">
+                                {% for error in form.category.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-large">
+                            {% if form.instance.pk %}Save Changes{% else %}Create Habit{% endif %}
+                        </button>
+                        <a href="{% url 'habit:habit-list' %}" class="btn btn-large">Cancel</a>
+                    </div>
+                </form>
+                
+                <div class="auth-links">
+                    <p>Need a new category? <a href="{% url 'habit:category-create' %}">Create one here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
